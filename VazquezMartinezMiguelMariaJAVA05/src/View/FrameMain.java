@@ -98,7 +98,7 @@ public class FrameMain extends javax.swing.JFrame {
     }//GEN-LAST:event_listMenuButtonMouseClicked
 
     private void navMenuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navMenuButtonMouseClicked
-        changeJPanel(navPanel);
+        changeJPanel(new NavigationPanel());
     }//GEN-LAST:event_navMenuButtonMouseClicked
 
     private void aboutMenuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMenuButtonMouseClicked
@@ -135,7 +135,6 @@ public class FrameMain extends javax.swing.JFrame {
         pack();
     }
 
-    private NavigationPanel navPanel = new NavigationPanel();
     private AboutAppPanel infoPanel = new AboutAppPanel();
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

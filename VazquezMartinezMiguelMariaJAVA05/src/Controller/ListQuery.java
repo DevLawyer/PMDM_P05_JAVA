@@ -9,16 +9,16 @@ public class ListQuery {
     private static Connection conn = null;
     private static Statement stmt = null;
     private static ResultSet rset = null;
-    private static ArrayList<Employee> list = null;
+    private static ArrayList list;
      
-    public static ArrayList getDBData(){
+    public static ArrayList getDBData(String query){
         try{
+            list = new ArrayList();
             conn = AccessDB.getConnection();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                   ResultSet.CONCUR_READ_ONLY);
-            String sql = "SELECT * FROM empleado ORDER BY apellido";
 
-            rset = stmt.executeQuery(sql);
+            rset = stmt.executeQuery(query);
             
             while(rset.next()){
                         
@@ -32,29 +32,36 @@ public class ListQuery {
                 
                 list.add(auxEmp);
             }
+            rset.close();
         }catch(SQLException e){
-            System.out.println("Error al conectar con la BBDD:");
+            System.out.println("Error al conectar con la BBDD.");
         }  
-        
+        AccessDB.close(rset);
+        AccessDB.close(stmt);
+        AccessDB.close(conn);
         return list;
     }
     
+    public static ArrayList getDBField(String query){
+        try{
+            list = new ArrayList();
+            conn = AccessDB.getConnection();
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                                  ResultSet.CONCUR_READ_ONLY);
+
+            rset = stmt.executeQuery(query);
+            
+            while(rset.next()){
+                list.add(rset.getString(1));
+            }
+            rset.close();
+        }catch(SQLException e){
+            System.out.println("Error al conectar con la BBDD.");
+        }  
+        AccessDB.close(rset);
+        AccessDB.close(stmt);
+        AccessDB.close(conn);
+        return list;
+    }
     
-    public static void close(ResultSet rs) {
-        try {
-            rs.close();
-        } catch (Exception ignored) {}
-    } 
-
-    public static void close(Statement stmt) {
-        try {
-            stmt.close();
-        } catch (Exception ignored) {}
-    } 
-
-    public static void close(Connection conn) {
-        try {
-            conn.close();
-        } catch (Exception ignored) {}
-    }     
 }   

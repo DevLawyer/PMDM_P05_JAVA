@@ -21,6 +21,7 @@ public class Employee {
     private float maxSalary;
     private GregorianCalendar entryDate;
     
+    static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     // CONSTRUCTOR /////////////////////////////////////////////////////////////
     public Employee(String number, String name, String surname, String picture, String salary, String maxSalary, String entryDate){
@@ -72,7 +73,7 @@ public class Employee {
     }
                         
     private void setEntryDate(String entryDate){
-        String[] auxDate = entryDate.split("/");
+        String[] auxDate = entryDate.split("-");
         
         this.entryDate = new GregorianCalendar(
                                                 Integer.parseInt(auxDate[0]), 
@@ -125,7 +126,12 @@ public class Employee {
     
     @Override
     public String toString(){
-        return "";
+        return Integer.toString(this.number)+";"+
+                this.name+";"+
+                this.surname+";"+
+                Float.toString(this.salary)+";"+
+                Float.toString(this.maxSalary)+";"+
+                sdf.format(entryDate.getTime());
     }
     
 }
