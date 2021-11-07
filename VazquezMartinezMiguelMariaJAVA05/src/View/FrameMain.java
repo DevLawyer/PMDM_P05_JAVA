@@ -6,6 +6,7 @@
 package View;
 
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 /**
  *
@@ -45,8 +46,8 @@ public class FrameMain extends javax.swing.JFrame {
         menuBar.setBorder(null);
         menuBar.setForeground(new java.awt.Color(0, 0, 0));
         menuBar.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        menuBar.setMinimumSize(new java.awt.Dimension(185, 30));
-        menuBar.setPreferredSize(new java.awt.Dimension(185, 30));
+        menuBar.setMinimumSize(new java.awt.Dimension(185, 40));
+        menuBar.setPreferredSize(new java.awt.Dimension(185, 40));
 
         listMenuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/listIcon.png"))); // NOI18N
         listMenuButton.setText("Listar");
@@ -68,6 +69,11 @@ public class FrameMain extends javax.swing.JFrame {
 
         aboutMenuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/infoIcon.png"))); // NOI18N
         aboutMenuButton.setText("Información");
+        aboutMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                aboutMenuButtonMouseClicked(evt);
+            }
+        });
         menuBar.add(aboutMenuButton);
 
         setJMenuBar(menuBar);
@@ -95,6 +101,10 @@ public class FrameMain extends javax.swing.JFrame {
         changeJPanel(navPanel);
     }//GEN-LAST:event_navMenuButtonMouseClicked
 
+    private void aboutMenuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMenuButtonMouseClicked
+        changeJPanel(infoPanel);
+    }//GEN-LAST:event_aboutMenuButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -104,21 +114,10 @@ public class FrameMain extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch (Exception E){
+        
         }
         //</editor-fold>
 
@@ -137,6 +136,7 @@ public class FrameMain extends javax.swing.JFrame {
     }
 
     private NavigationPanel navPanel = new NavigationPanel();
+    private AboutAppPanel infoPanel = new AboutAppPanel();
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu aboutMenuButton;
