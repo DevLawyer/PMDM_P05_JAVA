@@ -16,7 +16,7 @@ public class ListQuery {
             list = new ArrayList();
             conn = AccessDB.getConnection();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                                  ResultSet.CONCUR_READ_ONLY);
+                                        ResultSet.CONCUR_READ_ONLY);
 
             rset = stmt.executeQuery(query);
             

@@ -39,25 +39,25 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="plusExtraLabelList" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="entryDateLabelList" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="plusExtraFieldList" pref="170" max="32767" attributes="0"/>
+                              <Component id="entryDateFieldList" pref="170" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="numberLabelList" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="nameLabelList" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="surnameLabelList" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="salaryLabelList" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="maxSalaryLabelList" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="entryDateLabelList" alignment="1" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="maxSalaryLabelList" alignment="1" min="-2" pref="110" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="maxSalaryFieldList" alignment="0" max="32767" attributes="0"/>
                                   <Component id="salaryFieldList" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="surnameFieldList" alignment="0" max="32767" attributes="0"/>
                                   <Component id="nameFieldList" alignment="0" max="32767" attributes="0"/>
                                   <Component id="numberFieldList" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="entryDateFieldList" alignment="1" pref="170" max="32767" attributes="0"/>
+                                  <Component id="maxSalaryFieldList" alignment="1" pref="170" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -66,24 +66,24 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="500" max="-2" attributes="0"/>
+                      <Component id="headerLabelList" min="-2" pref="500" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jLabel2" min="-2" pref="110" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="fromLabelList" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="toLabelList" min="-2" pref="110" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jDateChooser2" min="-2" pref="170" max="-2" attributes="0"/>
+                              <Component id="toDateChooser" min="-2" pref="170" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="filterButton" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jDateChooser1" min="-2" pref="170" max="-2" attributes="0"/>
+                              <Component id="fromDateChooser" min="-2" pref="170" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButton2" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="clearButton" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -97,18 +97,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="headerLabelList" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jDateChooser1" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="fromLabelList" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="fromDateChooser" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="clearButton" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jDateChooser2" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="toLabelList" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="toDateChooser" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="filterButton" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -126,6 +126,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="surnameLabelList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="surnameFieldList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="salaryLabelList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="salaryFieldList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
@@ -138,11 +143,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="entryDateLabelList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="entryDateFieldList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="plusExtraLabelList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="plusExtraFieldList" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="246" max="-2" attributes="0"/>
@@ -160,7 +160,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="jList1">
+        <Component class="javax.swing.JList" name="mainJList">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Verdana" size="12" style="0"/>
@@ -169,13 +169,16 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="mainJListValueChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="filterButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -192,10 +195,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="filterButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="headerLabelList">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -219,7 +222,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="fromLabelList">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -233,7 +236,7 @@
         <Property name="text" type="java.lang.String" value="Desde: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="toLabelList">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -247,7 +250,7 @@
         <Property name="text" type="java.lang.String" value="Hasta:"/>
       </Properties>
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+    <Component class="com.toedter.calendar.JDateChooser" name="fromDateChooser">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -258,7 +261,7 @@
         <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
       </Properties>
     </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+    <Component class="com.toedter.calendar.JDateChooser" name="toDateChooser">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -268,12 +271,12 @@
         </Property>
         <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
         <Property name="minSelectableDate" type="java.util.Date" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="jDateChooser1.getDate()" type="code"/>
+          <Connection code="fromDateChooser.getDate()" type="code"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jDateChooser2FocusGained"/>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jDateChooser2MouseClicked"/>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="toDateChooserFocusGained"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toDateChooserMouseClicked"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="numberLabelList">
@@ -298,7 +301,7 @@
         <Property name="text" type="java.lang.String" value="Nombre:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="salaryLabelList">
+    <Component class="javax.swing.JLabel" name="surnameLabelList">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Verdana" size="12" style="1"/>
@@ -306,10 +309,10 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Sueldo:"/>
+        <Property name="text" type="java.lang.String" value="Apellido:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="maxSalaryLabelList">
+    <Component class="javax.swing.JLabel" name="salaryLabelList">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Verdana" size="12" style="1"/>
@@ -320,7 +323,7 @@
         <Property name="text" type="java.lang.String" value="Salario:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="entryDateLabelList">
+    <Component class="javax.swing.JLabel" name="maxSalaryLabelList">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Verdana" size="12" style="1"/>
@@ -331,7 +334,7 @@
         <Property name="text" type="java.lang.String" value="Salario m&#xe1;ximo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="plusExtraLabelList">
+    <Component class="javax.swing.JLabel" name="entryDateLabelList">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Verdana" size="12" style="1"/>
@@ -351,6 +354,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="nameFieldList">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="cc" red="cc" type="rgb"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="surnameFieldList">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -382,17 +393,9 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="plusExtraFieldList">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="cc" type="rgb"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="clearButton">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -409,7 +412,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -7,9 +7,11 @@ package View;
 
 import Controller.ListQuery;
 import Model.Employee;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class ListPanel extends javax.swing.JPanel {
 
@@ -19,9 +21,7 @@ public class ListPanel extends javax.swing.JPanel {
     public ListPanel() {
         initComponents();
         model = new DefaultListModel();
-        myList = ListQuery.getDBData("SELECT * FROM empleado ORDER BY numero");
-        jList1.setModel(modelList());
-        
+        resetMainJList(); 
     }
     
     /**
@@ -34,27 +34,27 @@ public class ListPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        mainJList = new javax.swing.JList<>();
+        filterButton = new javax.swing.JButton();
+        headerLabelList = new javax.swing.JLabel();
+        fromLabelList = new javax.swing.JLabel();
+        toLabelList = new javax.swing.JLabel();
+        fromDateChooser = new com.toedter.calendar.JDateChooser();
+        toDateChooser = new com.toedter.calendar.JDateChooser();
         numberLabelList = new javax.swing.JLabel();
         nameLabelList = new javax.swing.JLabel();
+        surnameLabelList = new javax.swing.JLabel();
         salaryLabelList = new javax.swing.JLabel();
         maxSalaryLabelList = new javax.swing.JLabel();
         entryDateLabelList = new javax.swing.JLabel();
-        plusExtraLabelList = new javax.swing.JLabel();
         numberFieldList = new javax.swing.JTextField();
         nameFieldList = new javax.swing.JTextField();
+        surnameFieldList = new javax.swing.JTextField();
         salaryFieldList = new javax.swing.JTextField();
         maxSalaryFieldList = new javax.swing.JTextField();
         entryDateFieldList = new javax.swing.JTextField();
-        plusExtraFieldList = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(new java.awt.Color(0, 0, 0));
@@ -62,55 +62,60 @@ public class ListPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(600, 500));
         setPreferredSize(new java.awt.Dimension(600, 500));
 
-        jList1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        mainJList.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        mainJList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                mainJListValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(mainJList);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Filtrar");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 30));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        filterButton.setBackground(new java.awt.Color(255, 255, 255));
+        filterButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        filterButton.setForeground(new java.awt.Color(0, 0, 0));
+        filterButton.setText("Filtrar");
+        filterButton.setPreferredSize(new java.awt.Dimension(100, 30));
+        filterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                filterButtonActionPerformed(evt);
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("EMPLEADOS");
-        jLabel1.setMaximumSize(new java.awt.Dimension(200, 30));
-        jLabel1.setMinimumSize(new java.awt.Dimension(200, 30));
-        jLabel1.setPreferredSize(new java.awt.Dimension(200, 30));
+        headerLabelList.setBackground(new java.awt.Color(255, 255, 255));
+        headerLabelList.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        headerLabelList.setForeground(new java.awt.Color(0, 0, 0));
+        headerLabelList.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headerLabelList.setText("EMPLEADOS");
+        headerLabelList.setMaximumSize(new java.awt.Dimension(200, 30));
+        headerLabelList.setMinimumSize(new java.awt.Dimension(200, 30));
+        headerLabelList.setPreferredSize(new java.awt.Dimension(200, 30));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Desde: ");
+        fromLabelList.setBackground(new java.awt.Color(255, 255, 255));
+        fromLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        fromLabelList.setForeground(new java.awt.Color(0, 0, 0));
+        fromLabelList.setText("Desde: ");
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Hasta:");
+        toLabelList.setBackground(new java.awt.Color(255, 255, 255));
+        toLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        toLabelList.setForeground(new java.awt.Color(0, 0, 0));
+        toLabelList.setText("Hasta:");
 
-        jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser1.setForeground(new java.awt.Color(0, 0, 0));
-        jDateChooser1.setDateFormatString("dd/MM/yyyy");
+        fromDateChooser.setBackground(new java.awt.Color(255, 255, 255));
+        fromDateChooser.setForeground(new java.awt.Color(0, 0, 0));
+        fromDateChooser.setDateFormatString("dd/MM/yyyy");
 
-        jDateChooser2.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser2.setForeground(new java.awt.Color(0, 0, 0));
-        jDateChooser2.setDateFormatString("dd/MM/yyyy");
-        jDateChooser2.setMinSelectableDate(jDateChooser1.getDate());
-        jDateChooser2.addFocusListener(new java.awt.event.FocusAdapter() {
+        toDateChooser.setBackground(new java.awt.Color(255, 255, 255));
+        toDateChooser.setForeground(new java.awt.Color(0, 0, 0));
+        toDateChooser.setDateFormatString("dd/MM/yyyy");
+        toDateChooser.setMinSelectableDate(fromDateChooser.getDate());
+        toDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jDateChooser2FocusGained(evt);
+                toDateChooserFocusGained(evt);
             }
         });
-        jDateChooser2.addMouseListener(new java.awt.event.MouseAdapter() {
+        toDateChooser.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jDateChooser2MouseClicked(evt);
+                toDateChooserMouseClicked(evt);
             }
         });
 
@@ -122,27 +127,30 @@ public class ListPanel extends javax.swing.JPanel {
         nameLabelList.setForeground(new java.awt.Color(0, 0, 0));
         nameLabelList.setText("Nombre:");
 
+        surnameLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        surnameLabelList.setForeground(new java.awt.Color(0, 0, 0));
+        surnameLabelList.setText("Apellido:");
+
         salaryLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         salaryLabelList.setForeground(new java.awt.Color(0, 0, 0));
-        salaryLabelList.setText("Sueldo:");
+        salaryLabelList.setText("Salario:");
 
         maxSalaryLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         maxSalaryLabelList.setForeground(new java.awt.Color(0, 0, 0));
-        maxSalaryLabelList.setText("Salario:");
+        maxSalaryLabelList.setText("Salario máximo:");
 
         entryDateLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         entryDateLabelList.setForeground(new java.awt.Color(0, 0, 0));
-        entryDateLabelList.setText("Salario máximo:");
-
-        plusExtraLabelList.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        plusExtraLabelList.setForeground(new java.awt.Color(0, 0, 0));
-        plusExtraLabelList.setText("Fecha de alta:");
+        entryDateLabelList.setText("Fecha de alta:");
 
         numberFieldList.setEditable(false);
         numberFieldList.setBackground(new java.awt.Color(204, 204, 204));
 
         nameFieldList.setEditable(false);
         nameFieldList.setBackground(new java.awt.Color(204, 204, 204));
+
+        surnameFieldList.setEditable(false);
+        surnameFieldList.setBackground(new java.awt.Color(204, 204, 204));
 
         salaryFieldList.setEditable(false);
         salaryFieldList.setBackground(new java.awt.Color(204, 204, 204));
@@ -153,17 +161,14 @@ public class ListPanel extends javax.swing.JPanel {
         entryDateFieldList.setEditable(false);
         entryDateFieldList.setBackground(new java.awt.Color(204, 204, 204));
 
-        plusExtraFieldList.setEditable(false);
-        plusExtraFieldList.setBackground(new java.awt.Color(204, 204, 204));
-
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Limpiar");
-        jButton2.setPreferredSize(new java.awt.Dimension(100, 30));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        clearButton.setBackground(new java.awt.Color(255, 255, 255));
+        clearButton.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        clearButton.setForeground(new java.awt.Color(0, 0, 0));
+        clearButton.setText("Limpiar");
+        clearButton.setPreferredSize(new java.awt.Dimension(100, 30));
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                clearButtonActionPerformed(evt);
             }
         });
 
@@ -177,42 +182,42 @@ public class ListPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(plusExtraLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(entryDateLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(plusExtraFieldList, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                                .addComponent(entryDateFieldList, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(numberLabelList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nameLabelList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(surnameLabelList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(salaryLabelList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(maxSalaryLabelList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(entryDateLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(maxSalaryLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(maxSalaryFieldList, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(salaryFieldList, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(surnameFieldList, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nameFieldList, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(numberFieldList, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(entryDateFieldList, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))))
+                                    .addComponent(maxSalaryFieldList, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(headerLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fromLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(toLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(toDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(filterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jSeparator1))
                 .addGap(22, 22, 22))
         );
@@ -220,17 +225,17 @@ public class ListPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fromLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(toLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -245,6 +250,10 @@ public class ListPanel extends javax.swing.JPanel {
                             .addComponent(nameFieldList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(surnameLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(surnameFieldList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(salaryLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(salaryFieldList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -254,32 +263,64 @@ public class ListPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(entryDateLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entryDateFieldList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(plusExtraLabelList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(plusExtraFieldList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(entryDateFieldList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jDateChooser2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDateChooser2FocusGained
+    private void toDateChooserFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_toDateChooserFocusGained
 
-    }//GEN-LAST:event_jDateChooser2FocusGained
+    }//GEN-LAST:event_toDateChooserFocusGained
 
-    private void jDateChooser2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDateChooser2MouseClicked
-        Date date = jDateChooser1.getDate();
-        jDateChooser2.getJCalendar().setMinSelectableDate(date);
-    }//GEN-LAST:event_jDateChooser2MouseClicked
+    private void toDateChooserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toDateChooserMouseClicked
+        Date date = fromDateChooser.getDate();
+        toDateChooser.getJCalendar().setMinSelectableDate(date);
+    }//GEN-LAST:event_toDateChooserMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void filterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonActionPerformed
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        
+        if(fromDateChooser.getDate() == null){
+            JOptionPane.showMessageDialog(null, "Debe indicar al menos una fecha desde la que filtrar.");
+        }else{
+            if(toDateChooser.getDate() == null){
+                toDateChooser.setDate(new Date());
+            }
+            
+            String fromDate = formatDate.format(fromDateChooser.getDate());
+            String toDate = formatDate.format(toDateChooser.getDate());
+            
+            myList = ListQuery.getDBData("SELECT * FROM empleado WHERE fechaalta BETWEEN '"+fromDate+"' AND '"+toDate+"' ORDER BY fechaalta DESC");
+            mainJList.setModel(modelList());
+        }
+        
+    }//GEN-LAST:event_filterButtonActionPerformed
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        
+        if(fromDateChooser.getDate() == null && toDateChooser.getDate() == null){
+            JOptionPane.showMessageDialog(null, "El filtro ya está limpio.");
+        }else{
+            fromDateChooser.setDate(null);
+            toDateChooser.setDate(null);
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+            resetMainJList();
+        }
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void mainJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_mainJListValueChanged
+
+        String[] selected = mainJList.getSelectedValue().split(";");
+        
+        numberFieldList.setText(selected[0]);
+        nameFieldList.setText(selected[1]);
+        surnameFieldList.setText(selected[2]);
+        salaryFieldList.setText(selected[3]);
+        maxSalaryFieldList.setText(selected[4]);
+        entryDateFieldList.setText(selected[5]);
+
+    }//GEN-LAST:event_mainJListValueChanged
 
     public DefaultListModel modelList(){
         
@@ -296,31 +337,36 @@ public class ListPanel extends javax.swing.JPanel {
         return model;
     }
     
+    public void resetMainJList(){
+        myList = ListQuery.getDBData("SELECT * FROM empleado ORDER BY numero");
+        mainJList.setModel(modelList());
+    }
+    
     private ArrayList<Employee> myList = new ArrayList();
     private DefaultListModel<String> model;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton clearButton;
     private javax.swing.JTextField entryDateFieldList;
     private javax.swing.JLabel entryDateLabelList;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JButton filterButton;
+    private com.toedter.calendar.JDateChooser fromDateChooser;
+    private javax.swing.JLabel fromLabelList;
+    private javax.swing.JLabel headerLabelList;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JList<String> mainJList;
     private javax.swing.JTextField maxSalaryFieldList;
     private javax.swing.JLabel maxSalaryLabelList;
     private javax.swing.JTextField nameFieldList;
     private javax.swing.JLabel nameLabelList;
     private javax.swing.JTextField numberFieldList;
     private javax.swing.JLabel numberLabelList;
-    private javax.swing.JTextField plusExtraFieldList;
-    private javax.swing.JLabel plusExtraLabelList;
     private javax.swing.JTextField salaryFieldList;
     private javax.swing.JLabel salaryLabelList;
+    private javax.swing.JTextField surnameFieldList;
+    private javax.swing.JLabel surnameLabelList;
+    private com.toedter.calendar.JDateChooser toDateChooser;
+    private javax.swing.JLabel toLabelList;
     // End of variables declaration//GEN-END:variables
 }

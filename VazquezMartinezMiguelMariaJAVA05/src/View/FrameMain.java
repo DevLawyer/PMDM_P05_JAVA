@@ -37,9 +37,8 @@ public class FrameMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(600, 500));
-        setMinimumSize(new java.awt.Dimension(600, 500));
-        setPreferredSize(new java.awt.Dimension(600, 500));
+        setMinimumSize(new java.awt.Dimension(600, 530));
+        setPreferredSize(new java.awt.Dimension(600, 530));
         setResizable(false);
 
         menuBar.setBackground(new java.awt.Color(255, 255, 255));

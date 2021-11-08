@@ -6,9 +6,19 @@
 package View;
 
 import Controller.ListQuery;
+import Controller.NavigationQuery;
 import Model.Employee;
+import java.io.File;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +33,11 @@ public class NavigationPanel extends javax.swing.JPanel {
         initComponents();
         model = new DefaultComboBoxModel();
         myList = ListQuery.getDBField("SELECT DISTINCT apellido FROM empleado ORDER BY apellido");
-        jComboBox1.setModel(chargeSurnameFilter());
+        surnamerComboBoxNav.setModel(chargeSurnameFilter());
+        
+        NavigationQuery.startNavigation();
+        resetNavigation();
+        showEmployee();
     }
 
     /**
@@ -36,22 +50,24 @@ public class NavigationPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        nameLabelNav = new javax.swing.JLabel();
+        surnameLabelNav = new javax.swing.JLabel();
+        salaryLabelNav = new javax.swing.JLabel();
+        maxSalaryLabelNav = new javax.swing.JLabel();
+        entryDateLabelNav = new javax.swing.JLabel();
+        nameFieldNav = new javax.swing.JTextField();
+        surnameFieldNav = new javax.swing.JTextField();
+        salaryFieldNav = new javax.swing.JTextField();
+        maxSalaryFieldNav = new javax.swing.JTextField();
+        entryDateFieldNav = new javax.swing.JTextField();
+        surnamerComboBoxNav = new javax.swing.JComboBox<>();
+        filterButtonNav = new javax.swing.JButton();
+        pictureLabetNav = new javax.swing.JLabel();
+        headerLabelNav = new javax.swing.JLabel();
+        goBackButtonNav = new javax.swing.JButton();
+        moveForwardButtonNav = new javax.swing.JButton();
+        clearButtonNav = new javax.swing.JButton();
+        numberLabelNav = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(new java.awt.Color(0, 0, 0));
@@ -59,107 +75,124 @@ public class NavigationPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(600, 500));
         setPreferredSize(new java.awt.Dimension(600, 500));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Nombre:");
+        nameLabelNav.setBackground(new java.awt.Color(255, 255, 255));
+        nameLabelNav.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        nameLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        nameLabelNav.setText("Nombre:");
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Apellido:");
+        surnameLabelNav.setBackground(new java.awt.Color(255, 255, 255));
+        surnameLabelNav.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        surnameLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        surnameLabelNav.setText("Apellido:");
 
-        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Sueldo:");
+        salaryLabelNav.setBackground(new java.awt.Color(255, 255, 255));
+        salaryLabelNav.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        salaryLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        salaryLabelNav.setText("Sueldo:");
 
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Sueldo máximo:");
+        maxSalaryLabelNav.setBackground(new java.awt.Color(255, 255, 255));
+        maxSalaryLabelNav.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        maxSalaryLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        maxSalaryLabelNav.setText("Sueldo máximo:");
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Fecha alta:");
+        entryDateLabelNav.setBackground(new java.awt.Color(255, 255, 255));
+        entryDateLabelNav.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        entryDateLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        entryDateLabelNav.setText("Fecha alta:");
 
-        jTextField1.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
+        nameFieldNav.setBackground(new java.awt.Color(204, 204, 204));
+        nameFieldNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        nameFieldNav.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField2.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
+        surnameFieldNav.setBackground(new java.awt.Color(204, 204, 204));
+        surnameFieldNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        surnameFieldNav.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField3.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
+        salaryFieldNav.setBackground(new java.awt.Color(204, 204, 204));
+        salaryFieldNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        salaryFieldNav.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField4.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField4.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
+        maxSalaryFieldNav.setBackground(new java.awt.Color(204, 204, 204));
+        maxSalaryFieldNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        maxSalaryFieldNav.setForeground(new java.awt.Color(0, 0, 0));
 
-        jTextField5.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField5.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(0, 0, 0));
+        entryDateFieldNav.setBackground(new java.awt.Color(204, 204, 204));
+        entryDateFieldNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        entryDateFieldNav.setForeground(new java.awt.Color(0, 0, 0));
 
-        jComboBox1.setBackground(new java.awt.Color(204, 204, 204));
-        jComboBox1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        surnamerComboBoxNav.setBackground(new java.awt.Color(204, 204, 204));
+        surnamerComboBoxNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        surnamerComboBoxNav.setForeground(new java.awt.Color(0, 0, 0));
+        surnamerComboBoxNav.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        surnamerComboBoxNav.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                surnamerComboBoxNavActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Filtrar");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 30));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        filterButtonNav.setBackground(new java.awt.Color(255, 255, 255));
+        filterButtonNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        filterButtonNav.setForeground(new java.awt.Color(0, 0, 0));
+        filterButtonNav.setText("Filtrar");
+        filterButtonNav.setPreferredSize(new java.awt.Dimension(100, 30));
+        filterButtonNav.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                filterButtonNavActionPerformed(evt);
             }
         });
 
-        jLabel7.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel7.setMaximumSize(new java.awt.Dimension(172, 172));
-        jLabel7.setMinimumSize(new java.awt.Dimension(137, 137));
-        jLabel7.setPreferredSize(new java.awt.Dimension(172, 172));
+        pictureLabetNav.setBackground(new java.awt.Color(204, 204, 204));
+        pictureLabetNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pictureLabetNav.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pictureLabetNav.setMaximumSize(new java.awt.Dimension(172, 172));
+        pictureLabetNav.setMinimumSize(new java.awt.Dimension(137, 137));
+        pictureLabetNav.setPreferredSize(new java.awt.Dimension(172, 172));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("EMPLEADOS");
-        jLabel1.setMaximumSize(new java.awt.Dimension(200, 30));
-        jLabel1.setMinimumSize(new java.awt.Dimension(200, 30));
-        jLabel1.setPreferredSize(new java.awt.Dimension(200, 30));
+        headerLabelNav.setBackground(new java.awt.Color(255, 255, 255));
+        headerLabelNav.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        headerLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        headerLabelNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headerLabelNav.setText("EMPLEADOS");
+        headerLabelNav.setMaximumSize(new java.awt.Dimension(200, 30));
+        headerLabelNav.setMinimumSize(new java.awt.Dimension(200, 30));
+        headerLabelNav.setPreferredSize(new java.awt.Dimension(200, 30));
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/leftArrow.png"))); // NOI18N
-        jButton2.setPreferredSize(new java.awt.Dimension(100, 30));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        goBackButtonNav.setBackground(new java.awt.Color(255, 255, 255));
+        goBackButtonNav.setForeground(new java.awt.Color(0, 0, 0));
+        goBackButtonNav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/leftArrow.png"))); // NOI18N
+        goBackButtonNav.setPreferredSize(new java.awt.Dimension(100, 30));
+        goBackButtonNav.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                goBackButtonNavActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/rightArrow.png"))); // NOI18N
-        jButton3.setPreferredSize(new java.awt.Dimension(100, 30));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        moveForwardButtonNav.setBackground(new java.awt.Color(255, 255, 255));
+        moveForwardButtonNav.setForeground(new java.awt.Color(0, 0, 0));
+        moveForwardButtonNav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/rightArrow.png"))); // NOI18N
+        moveForwardButtonNav.setPreferredSize(new java.awt.Dimension(100, 30));
+        moveForwardButtonNav.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                moveForwardButtonNavActionPerformed(evt);
             }
         });
+
+        clearButtonNav.setBackground(new java.awt.Color(255, 255, 255));
+        clearButtonNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        clearButtonNav.setForeground(new java.awt.Color(0, 0, 0));
+        clearButtonNav.setText("Limpiar");
+        clearButtonNav.setPreferredSize(new java.awt.Dimension(100, 30));
+        clearButtonNav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonNavActionPerformed(evt);
+            }
+        });
+
+        numberLabelNav.setBackground(new java.awt.Color(204, 204, 204));
+        numberLabelNav.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        numberLabelNav.setForeground(new java.awt.Color(0, 0, 0));
+        numberLabelNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        numberLabelNav.setText("Number");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -169,112 +202,140 @@ public class NavigationPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(headerLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(50, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(goBackButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(moveForwardButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(clearButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(filterButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(surnamerComboBoxNav, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(numberLabelNav, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(pictureLabetNav, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(entryDateLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(entryDateFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(maxSalaryLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(maxSalaryFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(nameLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(nameFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(surnameLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(surnameFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(salaryLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(salaryFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(headerLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pictureLabetNav, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(nameLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(surnameLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(surnameFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(salaryLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(salaryFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(maxSalaryLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maxSalaryFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(entryDateLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(entryDateFieldNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, 0)
+                .addComponent(numberLabelNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(surnamerComboBoxNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(clearButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                    .addComponent(goBackButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(moveForwardButtonNav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void filterButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonNavActionPerformed
+        
+        if(model.getSelectedItem().toString() == "VACÍO" || model.getSelectedItem().toString() == "APELLIDO"){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado una opción.");
+        }else{
+            String query = "SELECT DISTINCT * FROM empleado WHERE apellido = '"+model.getSelectedItem().toString()+"'";
+            NavigationQuery.setQuery(query); 
+            NavigationQuery.moveForward();
+            showEmployee();
+        }
+    }//GEN-LAST:event_filterButtonNavActionPerformed
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void goBackButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonNavActionPerformed
+        NavigationQuery.goBack();
+        showEmployee();
+    }//GEN-LAST:event_goBackButtonNavActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void moveForwardButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveForwardButtonNavActionPerformed
+        NavigationQuery.moveForward();
+        showEmployee();
+
+    }//GEN-LAST:event_moveForwardButtonNavActionPerformed
+
+    private void surnamerComboBoxNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_surnamerComboBoxNavActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_surnamerComboBoxNavActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void clearButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonNavActionPerformed
+        if(model.getSelectedItem().toString() == "VACÍO" || model.getSelectedItem().toString() == "APELLIDO"){
+            JOptionPane.showMessageDialog(null, "El filtro ya está limpio.");
+        }
+        resetNavigation();
+        surnamerComboBoxNav.setSelectedIndex(0);
+    }//GEN-LAST:event_clearButtonNavActionPerformed
 
     private DefaultComboBoxModel chargeSurnameFilter(){
         if(myList == null){
-            model.addElement("No existen registros.");
+            model.addElement("VACÍO");
         }else{
             model.removeAllElements();
-            
+            model.addElement("APELLIDO");
             for(String surname : myList){
                 model.addElement(surname);
             }
@@ -283,27 +344,55 @@ public class NavigationPanel extends javax.swing.JPanel {
         return model;
     }
     
+    private void showEmployee(){
+        ResultSet rsetAux = NavigationQuery.getCurrent();
+        
+        try {
+            numberLabelNav.setText(rsetAux.getString(1));
+            nameFieldNav.setText(rsetAux.getString(2));
+            surnameFieldNav.setText(rsetAux.getString(3));
+            pictureLabetNav.setIcon(new ImageIcon("./Pictures/"+rsetAux.getString(4)));
+            salaryFieldNav.setText(rsetAux.getString(5));
+            maxSalaryFieldNav.setText(rsetAux.getString(6));
+            entryDateFieldNav.setText(rsetAux.getString(7));
+            
+            moveForwardButtonNav.setEnabled(!NavigationQuery.isLast());
+            goBackButtonNav.setEnabled(!NavigationQuery.isFirst());
+        } catch (SQLException ex) {
+            Logger.getLogger(NavigationPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    private void resetNavigation(){
+        NavigationQuery.setQuery("SELECT * FROM empleado ORDER BY numero");
+        NavigationQuery.moveForward();
+        showEmployee();
+    }
+    
     private ArrayList<String> myList = new ArrayList();
     private DefaultComboBoxModel<String> model;
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton clearButtonNav;
+    private javax.swing.JTextField entryDateFieldNav;
+    private javax.swing.JLabel entryDateLabelNav;
+    private javax.swing.JButton filterButtonNav;
+    private javax.swing.JButton goBackButtonNav;
+    private javax.swing.JLabel headerLabelNav;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField maxSalaryFieldNav;
+    private javax.swing.JLabel maxSalaryLabelNav;
+    private javax.swing.JButton moveForwardButtonNav;
+    private javax.swing.JTextField nameFieldNav;
+    private javax.swing.JLabel nameLabelNav;
+    private javax.swing.JLabel numberLabelNav;
+    private javax.swing.JLabel pictureLabetNav;
+    private javax.swing.JTextField salaryFieldNav;
+    private javax.swing.JLabel salaryLabelNav;
+    private javax.swing.JTextField surnameFieldNav;
+    private javax.swing.JLabel surnameLabelNav;
+    private javax.swing.JComboBox<String> surnamerComboBoxNav;
     // End of variables declaration//GEN-END:variables
 }

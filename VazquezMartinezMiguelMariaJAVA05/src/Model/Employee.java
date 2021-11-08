@@ -1,13 +1,7 @@
 package Model;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Employee {
@@ -95,19 +89,8 @@ public class Employee {
         return surname;
     }
     
-    public BufferedImage getPicture(){
-        BufferedImage myPicture = null;
-        try {
-            myPicture = ImageIO.read(new File(picture));
-        } catch (IOException ex) {
-            try {
-                myPicture = ImageIO.read(new File("default.jpg"));
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null, "Error al cargar la imagen.");
-            }
-        }
-        
-        return myPicture;
+    public String getPicture(){
+        return picture;
     }
     
     public float getSalary(){
