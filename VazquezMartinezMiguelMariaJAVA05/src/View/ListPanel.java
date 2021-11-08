@@ -282,7 +282,13 @@ public class ListPanel extends javax.swing.JPanel {
         
         if(fromDateChooser.getDate() == null){
             JOptionPane.showMessageDialog(null, "Debe indicar al menos una fecha desde la que filtrar.");
+        }else if(toDateChooser.getDate() != null && fromDateChooser.getDate().compareTo(toDateChooser.getDate()) > 0){
+            JOptionPane.showMessageDialog(null, "La fecha HASTA no puede ser anterior a DESDE.");
         }else{
+            /*
+            If the user don't select a date in toDateChooser this option select
+            the current date by default.
+            */
             if(toDateChooser.getDate() == null){
                 toDateChooser.setDate(new Date());
             }
