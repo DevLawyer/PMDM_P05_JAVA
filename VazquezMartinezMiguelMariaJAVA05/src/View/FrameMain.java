@@ -1,24 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* 
+* @author Miguel Maria Vazquez Martinez
+* Fifth practice of module PMDM.
+* 
+*/
+
 package View;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-/**
- *
- * @author migva
- */
 public class FrameMain extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrameMain
-     */
     public FrameMain() {
+        /**
+         * The constructor init all the components and show the information panel
+         * by default.
+         */
         initComponents();
+        changeJPanel(infoPanel);
     }
 
     /**
@@ -36,10 +36,12 @@ public class FrameMain extends javax.swing.JFrame {
         aboutMenuButton = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplicación");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(600, 530));
         setPreferredSize(new java.awt.Dimension(600, 530));
         setResizable(false);
+        setSize(new java.awt.Dimension(600, 530));
 
         menuBar.setBackground(new java.awt.Color(255, 255, 255));
         menuBar.setBorder(null);
@@ -93,14 +95,26 @@ public class FrameMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listMenuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMenuButtonMouseClicked
+        /**
+         * When the list button of the menu bar has been clicked this method
+         * change to ListPanel.
+         */
         changeJPanel(new ListPanel());
     }//GEN-LAST:event_listMenuButtonMouseClicked
 
     private void navMenuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navMenuButtonMouseClicked
+        /**
+         * When the navigation button of the menu bar has been clicked this method
+         * change to NavigationPanel.
+         */
         changeJPanel(new NavigationPanel());
     }//GEN-LAST:event_navMenuButtonMouseClicked
 
     private void aboutMenuButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMenuButtonMouseClicked
+        /**
+         * When the list button of the menu bar has been clicked this method
+         * change to AboutAppPanel.
+         */
         changeJPanel(infoPanel);
     }//GEN-LAST:event_aboutMenuButtonMouseClicked
 
@@ -129,7 +143,12 @@ public class FrameMain extends javax.swing.JFrame {
     }
     
     private void changeJPanel(JPanel auxPanel){
-        //This method change the panel of Main frame.
+        /**
+         * This method change the current panel with the new panel which recieve
+         * as a parameter.
+         * 
+         * @param auxPanel
+         */
         this.setContentPane(auxPanel);
         pack();
     }

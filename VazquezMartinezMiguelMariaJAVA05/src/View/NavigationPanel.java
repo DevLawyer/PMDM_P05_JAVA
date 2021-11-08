@@ -1,35 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* 
+* @author Miguel Maria Vazquez Martinez
+* Fifth practice of module PMDM.
+* 
+*/
+
 package View;
 
 import Controller.ListQuery;
 import Controller.NavigationQuery;
-import Model.Employee;
-import java.io.File;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author migva
- */
 public class NavigationPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form NavigationPanel
-     */
     public NavigationPanel() {
+        /**
+         * The constructor of this class create a new object of the combo box model,
+         * charge the arraylist List with all the surnames of the table to create a combobox
+         * surname filter and start the cursor of the data base.
+         */
         initComponents();
         model = new DefaultComboBoxModel();
         myList = ListQuery.getDBField("SELECT DISTINCT apellido FROM empleado ORDER BY apellido");
@@ -296,7 +292,10 @@ public class NavigationPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void filterButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterButtonNavActionPerformed
-        
+        /**
+         * THis method send to NavigationQuery class the new query with the surname
+         * selected by the user if this option exist.
+         */
         if(model.getSelectedItem().toString() == "VACÍO" || model.getSelectedItem().toString() == "APELLIDO"){
             JOptionPane.showMessageDialog(null, "No ha seleccionado una opción.");
         }else{
@@ -308,11 +307,19 @@ public class NavigationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_filterButtonNavActionPerformed
 
     private void goBackButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackButtonNavActionPerformed
+        /**
+         * THis method call the method which contains in the NavigationQuery class
+         * to move the resultset to the previous position in the cursor.
+         */
         NavigationQuery.goBack();
         showEmployee();
     }//GEN-LAST:event_goBackButtonNavActionPerformed
 
     private void moveForwardButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveForwardButtonNavActionPerformed
+        /**
+         * THis method call the method which contains in the NavigationQuery class
+         * to move the resultset to the next position in the cursor.
+         */
         NavigationQuery.moveForward();
         showEmployee();
 
@@ -323,14 +330,26 @@ public class NavigationPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_surnamerComboBoxNavActionPerformed
 
     private void clearButtonNavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonNavActionPerformed
+        /**
+         * This method check if the filter has been selected and reset the information
+         * and the combobox option.
+         */
         if(model.getSelectedItem().toString() == "VACÍO" || model.getSelectedItem().toString() == "APELLIDO"){
             JOptionPane.showMessageDialog(null, "El filtro ya está limpio.");
+        }else{
+            resetNavigation();
+            surnamerComboBoxNav.setSelectedIndex(0);
         }
-        resetNavigation();
-        surnamerComboBoxNav.setSelectedIndex(0);
     }//GEN-LAST:event_clearButtonNavActionPerformed
 
     private DefaultComboBoxModel chargeSurnameFilter(){
+        /**
+         * This method charge in the comboBox model the word EMPTY if the data base
+         * does not connect or the table of data base is empty or charge the comboBox
+         * with the surnames of the table.
+         * 
+         * @return the model with the information charged.
+         */
         if(myList == null){
             model.addElement("VACÍO");
         }else{
@@ -345,6 +364,10 @@ public class NavigationPanel extends javax.swing.JPanel {
     }
     
     private void showEmployee(){
+        /**
+         * This method call the method of the NavigationQuery class which return
+         * the current result set and show the information in the fields.
+         */
         ResultSet rsetAux = NavigationQuery.getCurrent();
         
         try {
@@ -365,6 +388,10 @@ public class NavigationPanel extends javax.swing.JPanel {
     }
     
     private void resetNavigation(){
+        /**
+         * This method send the default query to the data base that select all the
+         * fields of the table.
+         */
         NavigationQuery.setQuery("SELECT * FROM empleado ORDER BY numero");
         NavigationQuery.moveForward();
         showEmployee();

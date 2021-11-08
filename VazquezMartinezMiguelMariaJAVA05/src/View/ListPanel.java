@@ -1,8 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* 
+* @author Miguel Maria Vazquez Martinez
+* Fifth practice of module PMDM.
+* 
+*/
+
 package View;
 
 import Controller.ListQuery;
@@ -15,9 +17,6 @@ import javax.swing.JOptionPane;
 
 public class ListPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ListPanel
-     */
     public ListPanel() {
         initComponents();
         model = new DefaultListModel();
@@ -311,15 +310,19 @@ public class ListPanel extends javax.swing.JPanel {
 
     private void mainJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_mainJListValueChanged
 
-        String[] selected = mainJList.getSelectedValue().split(";");
-        
-        numberFieldList.setText(selected[0]);
-        nameFieldList.setText(selected[1]);
-        surnameFieldList.setText(selected[2]);
-        salaryFieldList.setText(selected[3]);
-        maxSalaryFieldList.setText(selected[4]);
-        entryDateFieldList.setText(selected[5]);
+        try{
+            String[] selected = mainJList.getSelectedValue().split(";");
 
+            numberFieldList.setText(selected[0]);
+            nameFieldList.setText(selected[1]);
+            surnameFieldList.setText(selected[2]);
+            salaryFieldList.setText(selected[3]);
+            maxSalaryFieldList.setText(selected[4]);
+            entryDateFieldList.setText(selected[5]);
+
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "Error al cargar la lista.");
+        }
     }//GEN-LAST:event_mainJListValueChanged
 
     public DefaultListModel modelList(){

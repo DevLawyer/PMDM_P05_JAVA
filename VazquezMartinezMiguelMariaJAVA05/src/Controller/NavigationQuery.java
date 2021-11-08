@@ -1,8 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* 
+* @author Miguel Maria Vazquez Martinez
+* Fifth practice of module PMDM.
+* 
+*/
+
 package Controller;
 
 import java.sql.Connection;
@@ -12,17 +14,21 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author migva
- */
 public class NavigationQuery {
+    /**
+     * This class is used for read one by one the rows of the query which passed
+     * as a paremeter.
+     */
     private static Connection conn = null;
     private static Statement stmt = null;
     private static ResultSet rset = null;
     
     
     public static void startNavigation(){
+        /**
+         * This method connect with the data base and create a statement to read
+         * one by one all the rows of the result of the query.
+         */
         try {
             conn = AccessDB.getConnection();
             stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
@@ -33,6 +39,11 @@ public class NavigationQuery {
     }
     
     public static void setQuery(String query){
+        /**
+         * This method send a query receive as a parameter.
+         * 
+         * @param query which send in other part of the application.
+         */
         try {
             rset = stmt.executeQuery(query);
             if(rset.next()){
@@ -44,6 +55,9 @@ public class NavigationQuery {
     }
     
     public static void moveForward(){
+        /**
+         * This method move the resultset to the next position in the cursor.
+         */
         try {
             rset.next();
         } catch (SQLException ex) {
@@ -52,6 +66,9 @@ public class NavigationQuery {
     }
     
     public static void goBack(){
+        /**
+         * This method move the resultset to the previous position in the cursor.
+         */
         try {
             rset.previous();
         } catch (SQLException ex) {
@@ -60,6 +77,9 @@ public class NavigationQuery {
     }
     
     public static void goFirst(){
+        /**
+         * This method move the resultset to the first position in the cursor.
+         */
         try {
             rset.first();
         } catch (SQLException ex) {
@@ -68,6 +88,9 @@ public class NavigationQuery {
     }
     
     public static void goLast(){
+        /**
+         * This method move the resultset to the last position in the cursor.
+         */
         try {
             rset.last();
         } catch (SQLException ex) {
@@ -76,10 +99,21 @@ public class NavigationQuery {
     }
     
     public static ResultSet getCurrent(){
+        /**
+         * This method return the current resultset in the cursor.
+         * 
+         * @return rset.
+         */
         return rset;
     }
     
     public static boolean isFirst(){
+        /**
+         * This method return true or false if the resultset is in the first position
+         * of the cursor.
+         * 
+         * @return first boolean variable. True if the resultset is in the first position.
+         */
         boolean first = false;
         
         try {
@@ -92,6 +126,12 @@ public class NavigationQuery {
     }
     
     public static boolean isLast(){
+        /**
+         * This method return true or false if the resultset is in the last position
+         * of the cursor.
+         * 
+         * @return first boolean variable. True if the resultset is in the last position.
+         */
         boolean last = false;
         
         try {
@@ -104,6 +144,9 @@ public class NavigationQuery {
     }
 
     public static void close(){
+        /**
+         * This method close resultset, statement and connection with the data base.
+         */
         AccessDB.close(rset);
         AccessDB.close(stmt);
         AccessDB.close(conn);

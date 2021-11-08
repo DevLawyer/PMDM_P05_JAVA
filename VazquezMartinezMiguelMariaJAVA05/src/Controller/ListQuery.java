@@ -1,3 +1,10 @@
+/**
+* 
+* @author Miguel Maria Vazquez Martinez
+* Fifth practice of module PMDM.
+* 
+*/
+
 package Controller;
 
 import Model.Employee;
@@ -12,6 +19,13 @@ public class ListQuery {
     private static ArrayList list;
      
     public static ArrayList getDBData(String query){
+        /**
+         * This method receive as a parameter a query for the data base to create
+         * an arraylist with the rows and return it.
+         * 
+         * @param query is the String which send as a query to the data base.
+         * @return list with the content of the result of the query.
+         */
         try{
             list = new ArrayList();
             conn = AccessDB.getConnection();
@@ -43,6 +57,13 @@ public class ListQuery {
     }
     
     public static ArrayList getDBField(String query){
+        /**
+         * This method recieve a query for obtain of the data base one and only one
+         * field of a table.
+         * 
+         * @param query is the String which send as a query to the data base.
+         * @return list with the content of the result of the query.
+         */
         try{
             list = new ArrayList();
             conn = AccessDB.getConnection();
