@@ -28,12 +28,14 @@ public class NavigationPanel extends javax.swing.JPanel {
          */
         initComponents();
         model = new DefaultComboBoxModel();
-        myList = ListQuery.getDBField("SELECT DISTINCT apellido FROM empleado ORDER BY apellido");
-        surnamerComboBoxNav.setModel(chargeSurnameFilter());
         
         NavigationQuery.startNavigation();
         resetNavigation();
         showEmployee();
+        
+        myList = ListQuery.getDBField("SELECT DISTINCT apellido FROM empleado ORDER BY apellido");
+        surnamerComboBoxNav.setModel(chargeSurnameFilter());
+        
     }
 
     /**
