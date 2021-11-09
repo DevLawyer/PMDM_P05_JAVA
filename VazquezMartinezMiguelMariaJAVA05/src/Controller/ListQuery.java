@@ -49,7 +49,7 @@ public class ListQuery {
         }catch(SQLException e){
             System.out.println("Error al conectar con la BBDD.");
         }  
-        AccessDB.close(rset);
+
         AccessDB.close(stmt);
         AccessDB.close(conn);
         return list;
@@ -66,8 +66,7 @@ public class ListQuery {
         try{
             list = new ArrayList();
             conn = AccessDB.getConnection();
-            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                                  ResultSet.CONCUR_READ_ONLY);
+            stmt = conn.createStatement();
 
             rset = stmt.executeQuery(query);
             
@@ -78,7 +77,7 @@ public class ListQuery {
         }catch(SQLException e){
             System.out.println("Error al conectar con la BBDD.");
         }  
-        AccessDB.close(rset);
+        
         AccessDB.close(stmt);
         AccessDB.close(conn);
         return list;
