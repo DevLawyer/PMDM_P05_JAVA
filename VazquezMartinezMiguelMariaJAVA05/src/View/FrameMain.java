@@ -39,7 +39,6 @@ public class FrameMain extends javax.swing.JFrame {
         setTitle("Aplicación");
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(600, 530));
-        setPreferredSize(new java.awt.Dimension(600, 530));
         setResizable(false);
         setSize(new java.awt.Dimension(600, 530));
 

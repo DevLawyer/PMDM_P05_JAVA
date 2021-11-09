@@ -309,7 +309,7 @@ public class ListPanel extends javax.swing.JPanel {
         }else{
             fromDateChooser.setDate(null);
             toDateChooser.setDate(null);
-
+            clearFieldText();
             resetMainJList();
         }
     }//GEN-LAST:event_clearButtonActionPerformed
@@ -317,20 +317,30 @@ public class ListPanel extends javax.swing.JPanel {
     private void mainJListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_mainJListValueChanged
 
         try{
-            String[] selected = mainJList.getSelectedValue().split(";");
+            if(mainJList.getSelectedValue() != null){
+                String[] selected = mainJList.getSelectedValue().split(";");
 
-            numberFieldList.setText(selected[0]);
-            nameFieldList.setText(selected[1]);
-            surnameFieldList.setText(selected[2]);
-            salaryFieldList.setText(selected[3]);
-            maxSalaryFieldList.setText(selected[4]);
-            entryDateFieldList.setText(selected[5]);
-
+                numberFieldList.setText(selected[0]);
+                nameFieldList.setText(selected[1]);
+                surnameFieldList.setText(selected[2]);
+                salaryFieldList.setText(selected[3]);
+                maxSalaryFieldList.setText(selected[4]);
+                entryDateFieldList.setText(selected[5]);
+            }
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(null, "Error al cargar la lista.");
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_mainJListValueChanged
 
+    private void clearFieldText(){
+        numberFieldList.setText("");
+        nameFieldList.setText("");
+        surnameFieldList.setText("");
+        salaryFieldList.setText("");
+        maxSalaryFieldList.setText("");
+        entryDateFieldList.setText("");
+    }
+    
     public DefaultListModel modelList(){
         
         if(myList == null){
